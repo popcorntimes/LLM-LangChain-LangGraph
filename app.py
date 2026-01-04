@@ -19,7 +19,6 @@ class AgentState(TypedDict):
 
 # 2. NÓ DE CLASSIFICAÇÃO (Usando Groq)
 def classificador_node(state: AgentState):
-    """Classifica a mensagem usando o modelo Llama 3 via Groq."""
     llm = ChatGroq(model="llama-3.3-70b-versatile", temperature=0)
     
     prompt = ChatPromptTemplate.from_template(
@@ -32,11 +31,10 @@ def classificador_node(state: AgentState):
     chain = prompt | llm
     resposta = chain.invoke({"mensagem": state["mensagem"]})
     
-    # Limpeza da resposta
     categoria = resposta.content.strip().replace(".", "")
     return {"classificacao": categoria}
 
-# 3. LÓGICA DE ROTEAMENTO (Branching)
+# 3. LÓGICA DE ROTEAMENTO
 def roteador_condicional(state: AgentState):
     cat = state["classificacao"].lower()
     
@@ -47,7 +45,7 @@ def roteador_condicional(state: AgentState):
     else:
         return "ir_para_atendimento"
 
-# 4. NÓS DE DESTINO (Setores)
+# 4. NÓS DE DESTINO
 def node_fraude(state: AgentState):
     return {"setor": "Central de Fraude"}
 
@@ -83,7 +81,7 @@ workflow.add_edge("atendimento_geral", END)
 
 app = workflow.compile()
 
-# 6. EXECUÇÃO EM LOTE (Lendo o CSV de 10 registros)
+# 6. EXECUÇÃO EM LOTE
 def processar_base_completa():
     arquivo_entrada = 'base_clientes.csv'
     resultados_finais = []
