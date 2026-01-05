@@ -7,7 +7,7 @@ Este projeto apresenta uma solução de arquitetura de agentes inteligentes dese
 ## 1. Arquitetura do Sistema
 A solução utiliza o **LangGraph** para criar um fluxo de estados que permite o processamento condicional (*branching*) das mensagens conforme a classificação obtida.
 
-###Componentes do Grafo
+### Componentes do Grafo
 * **Estado (`AgentState`)**: Estrutura que mantém o contexto da mensagem, a classificação e o setor de destino durante o ciclo de vida do processo.
 
 * **Nó Classificador**: Agente que utiliza o modelo **Llama-3.3-70b (via Groq)** para analisar o texto e categorizá-lo automaticamente.
@@ -98,4 +98,5 @@ Como evolução da solução, as seguintes melhorias foram mapeadas:
 * **Dashboard de Performance (KPIs)**: Exibir o tempo médio de resposta do LLM e a taxa de acerto da classificação via feedback humano.
 
 * **Escalabilidade**: Implementar filas de mensagens para processamento assíncrono.
+
 
